@@ -50,7 +50,7 @@ createDb(()=>{
                     if (request_body){
                         parsed_data = JSON.parse(request_body)
                         db.collection('Store').findOne({name:parsed_data.name}).then((available)=>{
-                            if (available && available.quantity >= parsed_data.quantity){
+                            if (available && parsed_data.quantity >=0 && available.quantity >= parsed_data.quantity){
                                 db.collection('shopItems').findOne({_id:available._id}).then((data)=>{
                                     if (data){
                                         db.collection("shopItems").updateOne({_id:data._id},{$set:{quantity:parsed_data.quantity}})
