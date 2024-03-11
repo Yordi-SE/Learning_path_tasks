@@ -1,0 +1,14 @@
+{
+  "name": "online_shop",
+  "version": "1.0.0",
+  "description": "building the backend logic for an online shopping cart application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yordanos Lemmawork Molla (yordanos.lemmawork@a2sv.org)",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.4.0"
+  }
+}
