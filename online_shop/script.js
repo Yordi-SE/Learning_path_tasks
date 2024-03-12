@@ -65,7 +65,8 @@ async function sendData(method,url) {
             document.getElementById('name').value = '';
             document.getElementById('name2').value = '';
             document.getElementById('quantity').value = '';
-            fetchData()
+            fetchData();
+            total_price();
             const dataContainer = document.getElementById('error');
             const text = await response.text();
             dataContainer.innerHTML = text + " => " + response.status; 
@@ -91,7 +92,14 @@ async function fetchData() {
     try {
         const response = await fetch('http://localhost:3000/show_cart');
         if (!response.ok) {
-            throw new Error('Failed to fetch data');
+            const dataContainer = document.getElementById('error');
+            const text = await response.text();
+            dataContainer.innerHTML = text + " => " + response.status; 
+            setTimeout(() => {
+                dataContainer.innerHTML = "";
+                
+            }, 3000);
+            return
         }
         const data = await response.json();
         displayData(data);
@@ -103,7 +111,6 @@ async function fetchData() {
 function displayData(data) {
     const dataContainer = document.getElementById('dataContainer');
     dataContainer.innerHTML = ''; 
-    console.log(data)
     if (data.length === 0){
         dataContainer.innerHTML = "The Cart is Currently Empty"
         return
@@ -124,5 +131,28 @@ function store(){
         dataContainer.appendChild(itemElement);
     });
 }
+async function total_price() {
+    try {
+        const response = await fetch('http://localhost:3000/total_price');
+        if (!response.ok) {
+            const dataContainer = document.getElementById('error');
+            const text = await response.text();
+            dataContainer.innerHTML = text + " => " + response.status; 
+            setTimeout(() => {
+                dataContainer.innerHTML = "";
+                
+            }, 3000);
+            return
+        }
+        const data = await response.text();
+        const dataContainer = document.getElementById('price');
+        dataContainer.innerHTML = data; 
+
+        
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+total_price();
 fetchData();
 store();
