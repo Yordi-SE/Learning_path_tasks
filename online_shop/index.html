@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Data to API</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="store">
+        Store
+        
+    </div>
+    <div class="container">
+        <h1>Online Shopping</h1>
+        <div id="error"></div>
+        <div class="cont">
+            <label for="name">Name:</label>
+            <input type="text" id="name"><br><br>
+        
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity"><br><br>
+        
+            <button onclick="sendData('POST','http://127.0.0.1:3000/add')">Add</button>
+            <button onclick="sendData('PUT','http://127.0.0.1:3000/update_cart')">Update</button>
+        </div>
+        <div class="cont">
+            <label for="name2">Name:</label>
+            <input type="text" id="name2"><br><br>
+    
+            <button onclick="sendData('DELETE','http://127.0.0.1:3000/delete')">Delete</button>
+        </div>
+        <div class="cont cart">
+            current cart items
+            <div id="dataContainer">
+               
+            </div>
+            <button onclick="fetchData()">Show Cart</button>
+        </div>
+    
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
