@@ -1,0 +1,6 @@
+const express = require('express')
+const route = require('./routes/tasks_routes')
+app = express()
+app.use(express.json())
+app.use(route)
+app.listen(3000,'127.0.0.1')

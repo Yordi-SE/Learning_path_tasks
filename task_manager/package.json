@@ -1,0 +1,16 @@
+{
+  "name": "task_manager",
+  "version": "1.0.0",
+  "description": "task manager application that allows users to create, read, update, and delete tasks",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yordanos Lemmawork (yordanos.lemmawork@a2sv.org)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.2.1"
+  }
+}
