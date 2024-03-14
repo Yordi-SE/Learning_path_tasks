@@ -2,14 +2,14 @@ const Tasks = require('../model/db.js')
 const get_by_id = (req,res)=>{
     Tasks.findOne({_id: req.params.taskId}).then((data)=>{
         if (data){
-            res.send(JSON.stringify(data))
+            res.json(data)
         }
         else{
             res.status(404).send("task not found")
         }
         
     }).catch((err)=>{
-        res.status(404).send("task not found")
+        res.status(500).send("There was an error getting the task. Please try again later.")
     })
 }
 const patch_by_id = (req,res)=>{
@@ -27,8 +27,7 @@ const patch_by_id = (req,res)=>{
             res.status(404).send("task not found")
         }
     }).catch(()=>{
-        // res.writeHead(404)
-        res.status(404).send("task not found")
+        res.status(500).send("There was an error updating the task. Please try again later.")
     })
 }
 const delete_by_id = (req,res)=>{
@@ -41,12 +40,12 @@ const delete_by_id = (req,res)=>{
         }
         
     }).catch((error)=>{
-        res.status(404).send("task not found")
+        res.status(500).send("There was an error deleting the task. Please try again later.")
     })
 }
 const get_tasks = (req,res)=>{
     Tasks.find().then((data)=>{
-        res.send(JSON.stringify(data))
+        res.json(data)
     })
 }
 const post_tasks = (req,res)=>{
