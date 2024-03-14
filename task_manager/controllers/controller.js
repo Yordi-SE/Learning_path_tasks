@@ -9,7 +9,7 @@ const get_by_id = (req,res)=>{
         }
         
     }).catch((err)=>{
-        res.status(500).send("There was an error getting the task. Please try again later.")
+        res.status(400).send("There was an error getting the task. Please try again later.")
     })
 }
 const patch_by_id = (req,res)=>{
@@ -27,7 +27,7 @@ const patch_by_id = (req,res)=>{
             res.status(404).send("task not found")
         }
     }).catch(()=>{
-        res.status(500).send("There was an error updating the task. Please try again later.")
+        res.status(400).send("There was an error updating the task. Please try again later.")
     })
 }
 const delete_by_id = (req,res)=>{
