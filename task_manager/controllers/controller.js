@@ -46,11 +46,16 @@ const delete_by_id = (req,res)=>{
 const get_tasks = (req,res)=>{
     Tasks.find().then((data)=>{
         res.json(data)
+    }).catch((err)=>{
+        res.status(400).send("There was an error getting the tasks. Please try again later.")
     })
 }
 const post_tasks = (req,res)=>{
-    Tasks.create(req.body)
-    res.send("success")
+    Tasks.create(req.body).then((data)=>{
+        res.status(201).send("success")
+    }).catch((err)=>{
+        res.status(400).send("There was an error creating the task. Please try again later.")
+    })
 }
 module.exports = {
     get_by_id: get_by_id,
