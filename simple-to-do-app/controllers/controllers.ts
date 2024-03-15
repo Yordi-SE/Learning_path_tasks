@@ -9,7 +9,6 @@ import IdSchema from '../joi_validation/route_params';
 
 
 const post = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    console.log(req.originalUrl)
     const validation:Joi.ValidationResult = schema.validate(req.body)
     if (validation.error){
         throw new ValidationError({message: validation.error.details[0].message,logging:true})

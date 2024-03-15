@@ -13,22 +13,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/api',router);
 app.use((err: Error, req: express.Request, res: express.Response, next: NextFunction) => {
-    // Handled errors
     if(err instanceof CustomError) {
-      const { statusCode, errors, logging } = err;
-      if(logging) {
-        console.error(JSON.stringify({
-          code: err.statusCode,
-          errors: err.errors,
-          stack: err.stack,
-        }, null, 2));
-      }
-  
+      const { statusCode, errors } = err;
       return res.status(statusCode).send({ errors });
     }
-  
-    // Unhandled errors
-    console.error(JSON.stringify(err, null, 2));
     return res.status(500).send({ errors: [{ message: "Something went wrong" }] });
   })
 app.listen(port,hostname,()=>{

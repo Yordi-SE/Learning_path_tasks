@@ -10,8 +10,6 @@ export type CustomErrorContent = {
   
     constructor(message: string) {
       super(message);
-  
-      // Only because we are extending a built in class
-      Object.setPrototypeOf(this, CustomError.prototype);
+        Object.setPrototypeOf(this, CustomError.prototype);
     }
   }
