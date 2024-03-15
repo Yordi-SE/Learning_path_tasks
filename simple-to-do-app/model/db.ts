@@ -1,4 +1,5 @@
-import mongoose, {Document, Schema,Model,model} from 'mongoose';
+import mongoose, {Document, Schema,Model,model, mongo} from 'mongoose';
+mongoose.Promise = global.Promise;
 interface ITask extends Document{
     title: string,
     description: string
@@ -13,5 +14,10 @@ const TaskSchema: Schema<ITask> = new Schema<ITask>({
     completed: Boolean
 })
 const Tasks:Model<ITask>=model<ITask>('Tasks',TaskSchema)
-mongoose.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/To-do-db?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/To-do-db?retryWrites=true&w=majority&appName=Cluster0').then(()=>{
+    console.log('Connected to the database')
+}).catch((err)=>{
+    console.log('Error connecting to the database',err)
+    throw Error(err)
+})
 export default Tasks;
