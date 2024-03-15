@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
-mongoose.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/TaskDB?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/TaskDB?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+    console.log("Connected to the database!");
+}).catch((err) => {
+    console.log("Cannot connect to the database!", err);
+});
 const TaskSchema = new mongoose.Schema({
     title: {
         type: String,
