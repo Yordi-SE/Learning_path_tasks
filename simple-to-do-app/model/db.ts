@@ -13,5 +13,5 @@ const TaskSchema: Schema<ITask> = new Schema<ITask>({
     completed: Boolean
 })
 const Tasks:Model<ITask>=model<ITask>('Tasks',TaskSchema)
-mongoose.connect('mongodb+srv://yordanoslemmawork:zeC0vfZAdYiVf5L0@cluster0.cyp2ike.mongodb.net/To-do-db?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/To-do-db?retryWrites=true&w=majority&appName=Cluster0')
 export default Tasks;
