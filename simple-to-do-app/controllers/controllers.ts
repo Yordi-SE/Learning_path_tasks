@@ -1,6 +1,7 @@
-import express, { NextFunction } from 'express';
+import { NextFunction } from 'express';
+import express = require('express');
 import Tasks from '../model/db';
-import Joi from 'joi';
+import joi = require('joi');
 import NotFound from '../errors/not_found';
 import BadRequestError from '../errors/badrequest';
 import schema from '../joi_validation/validation';
@@ -9,7 +10,7 @@ import IdSchema from '../joi_validation/route_params';
 
 
 const post = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    const validation:Joi.ValidationResult = schema.validate(req.body)
+    const validation:joi.ValidationResult = schema.validate(req.body)
     if (validation.error){
         throw new ValidationError({message: validation.error.details[0].message})
     }
@@ -38,7 +39,7 @@ const get_all = (req:express.Request,res:express.Response,next:NextFunction):voi
 
 }
 const get_by_id = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    const validation:Joi.ValidationResult = IdSchema.validate(req.params)
+    const validation:joi.ValidationResult = IdSchema.validate(req.params)
     if (validation.error){
         throw new ValidationError({message: validation.error.details[0].message})
     }
@@ -54,11 +55,11 @@ const get_by_id = (req:express.Request,res:express.Response,next:NextFunction):v
     })
 }
 const put = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    const idValidation:Joi.ValidationResult = IdSchema.validate(req.params)
+    const idValidation:joi.ValidationResult = IdSchema.validate(req.params)
     if (idValidation.error){
         throw new ValidationError({message: idValidation.error.details[0].message})
     }
-    const validation:Joi.ValidationResult = schema.validate(req.body)
+    const validation:joi.ValidationResult = schema.validate(req.body)
     if (validation.error){
         throw new ValidationError({message: validation.error.details[0].message})
     }
@@ -74,7 +75,7 @@ const put = (req:express.Request,res:express.Response,next:NextFunction):void=>{
     })
 }
 const delete_by_id = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    const validation:Joi.ValidationResult = IdSchema.validate(req.params)
+    const validation:joi.ValidationResult = IdSchema.validate(req.params)
     if (validation.error){
         throw new ValidationError({message: validation.error.details[0].message})
     }

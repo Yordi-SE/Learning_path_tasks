@@ -1,4 +1,5 @@
-import express, { NextFunction } from 'express';
+import { NextFunction } from 'express';
+import express = require('express');
 import { CustomError } from './errors/custome_errors';
 import router from './routers/routers';
 import "express-async-errors";

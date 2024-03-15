@@ -1,4 +1,4 @@
-import express from 'express';
+import express = require('express');
 import controllers from '../controllers/controllers'
 const router:express.Router = express.Router();
 router.post('/todos', controllers.post)

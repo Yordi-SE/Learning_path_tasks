@@ -14,10 +14,10 @@ const TaskSchema: Schema<ITask> = new Schema<ITask>({
     completed: Boolean
 })
 const Tasks:Model<ITask>=model<ITask>('Tasks',TaskSchema)
-mongoose.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/To-do-db?retryWrites=true&w=majority&appName=Cluster0').then(()=>{
+mongoose.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/TaskDB?retryWrites=true&w=majority&appName=Cluster0').then(()=>{
     console.log('Connected to the database')
-}).catch((err)=>{
+}).catch((err:Error)=>{
     console.log('Error connecting to the database',err)
-    throw Error(err)
+    
 })
 export default Tasks;
