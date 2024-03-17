@@ -14,9 +14,10 @@ const post = (req, res, next) => {
     if (validation.error) {
         throw new validation_2.default({ message: validation.error.details[0].message });
     }
-    db_1.default.create(req.body).then((data) => {
+    const task = Object.assign(Object.assign({}, req.body), { userId: req.userId });
+    db_1.default.create(task).then((data) => {
         if (data) {
-            res.status(201).json(data);
+            res.status(201).json({ taskId: task._id, title: task.title, description: task.description, completed: task.completed });
         }
         else {
             throw new badrequest_1.default({ message: "some field is missing" });
@@ -26,9 +27,9 @@ const post = (req, res, next) => {
     });
 };
 const get_all = (req, res, next) => {
-    db_1.default.find().then((data) => {
+    db_1.default.find({ userId: req.userId }).then((data) => {
         if (data) {
-            res.json(data);
+            res.json(data.map((task) => { return { taskId: task._id, title: task.title, description: task.description, completed: task.completed }; }));
         }
         else {
             throw new not_found_1.default({ message: "task not found" });
@@ -44,7 +45,7 @@ const get_by_id = (req, res, next) => {
     }
     db_1.default.findById(req.params.id).then((data) => {
         if (data) {
-            res.json(data);
+            res.json({ taskId: data._id, title: data.title, description: data.description, completed: data.completed });
         }
         else {
             throw new not_found_1.default({ message: "task not found" });
@@ -62,9 +63,10 @@ const put = (req, res, next) => {
     if (validation.error) {
         throw new validation_2.default({ message: validation.error.details[0].message });
     }
-    db_1.default.findByIdAndUpdate(req.params.id, req.body, { new: true }).then((data) => {
+    const task = Object.assign(Object.assign({}, req.body), { userId: req.userId });
+    db_1.default.findByIdAndUpdate(req.params.id, task, { new: true }).then((data) => {
         if (data) {
-            res.json(data);
+            res.json({ taskId: data._id, title: data.title, description: data.description, completed: data.completed });
         }
         else {
             throw new not_found_1.default({ message: "task not found" });

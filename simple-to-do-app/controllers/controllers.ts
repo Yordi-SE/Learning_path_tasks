@@ -9,14 +9,15 @@ import ValidationError from '../errors/validation';
 import IdSchema from '../joi_validation/route_params';
 
 
-const post = (req:express.Request,res:express.Response,next:NextFunction):void=>{
+const post = (req:any,res:express.Response,next:NextFunction):void=>{
     const validation:joi.ValidationResult = schema.validate(req.body)
     if (validation.error){
         throw new ValidationError({message: validation.error.details[0].message})
     }
-    Tasks.create(req.body).then((data):void=>{
+    const task = {...req.body,userId:req.userId}
+    Tasks.create(task).then((data):void=>{
         if (data){
-            res.status(201).json(data)
+            res.status(201).json({taskId:task._id,title:task.title,description:task.description,completed:task.completed})
         }
         else{
             throw new BadRequestError({message: "some field is missing"})
@@ -25,10 +26,10 @@ const post = (req:express.Request,res:express.Response,next:NextFunction):void=>
         next(error)
     })
 }
-const get_all = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    Tasks.find().then((data):void=>{
+const get_all = (req:any,res:express.Response,next:NextFunction):void=>{
+    Tasks.find({userId:req.userId}).then((data:any):void=>{
         if (data){
-            res.json(data)
+            res.json(data.map((task:any)=>{return {taskId:task._id,title:task.title,description:task.description,completed:task.completed}}))
         }
         else{
             throw new NotFound({message: "task not found"})
@@ -45,7 +46,7 @@ const get_by_id = (req:express.Request,res:express.Response,next:NextFunction):v
     }
     Tasks.findById(req.params.id).then((data):void=>{
         if (data){
-            res.json(data)
+            res.json({taskId:data._id,title:data.title,description:data.description,completed:data.completed})
         }
         else{
             throw new NotFound({message: "task not found"})
@@ -54,7 +55,7 @@ const get_by_id = (req:express.Request,res:express.Response,next:NextFunction):v
         next(error)
     })
 }
-const put = (req:express.Request,res:express.Response,next:NextFunction):void=>{
+const put = (req:any,res:express.Response,next:NextFunction):void=>{
     const idValidation:joi.ValidationResult = IdSchema.validate(req.params)
     if (idValidation.error){
         throw new ValidationError({message: idValidation.error.details[0].message})
@@ -63,9 +64,10 @@ const put = (req:express.Request,res:express.Response,next:NextFunction):void=>{
     if (validation.error){
         throw new ValidationError({message: validation.error.details[0].message})
     }
-    Tasks.findByIdAndUpdate(req.params.id,req.body,{ new: true }).then((data):void=>{
+    const task = {...req.body,userId:req.userId}
+    Tasks.findByIdAndUpdate(req.params.id,task,{ new: true }).then((data):void=>{
         if (data){
-            res.json(data)
+            res.json({taskId:data._id,title:data.title,description:data.description,completed:data.completed})
         }
         else{
             throw new NotFound({message: "task not found"})
