@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/api',router);
-app.use('/auth',authRouter);
+app.use('/api/auth',authRouter);
 app.use(error_handler)
 app.listen(port,hostname,()=>{
   console.log('Express Server is started at ' + port)
