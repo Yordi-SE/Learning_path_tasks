@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/api', routers_1.default);
-app.use('/auth', authRouters_1.default);
+app.use('/api/auth', authRouters_1.default);
 app.use(custome_handler_1.default);
 app.listen(port, hostname, () => {
     console.log('Express Server is started at ' + port);

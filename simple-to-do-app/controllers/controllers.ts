@@ -1,19 +1,13 @@
 import { NextFunction } from 'express';
 import express = require('express');
 import Tasks from '../model/db';
-import joi = require('joi');
 import NotFound from '../errors/not_found';
 import BadRequestError from '../errors/badrequest';
-import schema from '../joi_validation/validation';
-import ValidationError from '../errors/validation';
-import IdSchema from '../joi_validation/route_params';
-
-
 const post = (req:any,res:express.Response,next:NextFunction):void=>{
     const task = {...req.body,userId:req.userId}
     Tasks.create(task).then((data):void=>{
         if (data){
-            res.status(201).json({taskId:task._id,title:task.title,description:task.description,completed:task.completed})
+            res.status(201).json({taskId:data._id,title:data.title,description:data.description,completed:data.completed})
         }
         else{
             throw new BadRequestError({message: "some field is missing"})

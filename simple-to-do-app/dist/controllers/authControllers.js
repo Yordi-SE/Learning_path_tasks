@@ -4,8 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signin = exports.signup = void 0;
-const User_validation_1 = __importDefault(require("../joi_validation/User_validation"));
-const validation_1 = __importDefault(require("../errors/validation"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const auth_config_1 = __importDefault(require("../jwt/auth.config"));
 const user_1 = __importDefault(require("../model/user"));
@@ -13,10 +11,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const badrequest_1 = __importDefault(require("../errors/badrequest"));
 const not_found_1 = __importDefault(require("../errors/not_found"));
 const signup = (req, res, next) => {
-    const { error } = User_validation_1.default.validate(req.body);
-    if (error) {
-        throw new validation_1.default({ message: error.details[0].message });
-    }
     user_1.default.findOne({ username: req.body.username }).exec().then((data) => {
         if (data) {
             throw new badrequest_1.default({ message: "username already exists" });

@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import authSchema from "../joi_validation/User_validation";
-import ValidationError from '../errors/validation';
 import bcrypt from 'bcrypt';
 import config from '../jwt/auth.config';
 import User from '../model/user';
@@ -8,10 +6,6 @@ import jwt from 'jsonwebtoken';
 import BadRequestError from '../errors/badrequest';
 import NotFound from '../errors/not_found';
 const signup = (req:Request, res:Response,next:NextFunction):void => {
-    const { error } = authSchema.validate(req.body);
-    if(error) {
-        throw new ValidationError({message: error.details[0].message});
-    }
     User.findOne({username:req.body.username}).exec().then((data):void=>{
         if (data){
             throw new BadRequestError({message: "username already exists"})
