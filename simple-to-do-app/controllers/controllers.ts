@@ -10,10 +10,6 @@ import IdSchema from '../joi_validation/route_params';
 
 
 const post = (req:any,res:express.Response,next:NextFunction):void=>{
-    const validation:joi.ValidationResult = schema.validate(req.body)
-    if (validation.error){
-        throw new ValidationError({message: validation.error.details[0].message})
-    }
     const task = {...req.body,userId:req.userId}
     Tasks.create(task).then((data):void=>{
         if (data){
@@ -40,10 +36,6 @@ const get_all = (req:any,res:express.Response,next:NextFunction):void=>{
 
 }
 const get_by_id = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    const validation:joi.ValidationResult = IdSchema.validate(req.params)
-    if (validation.error){
-        throw new ValidationError({message: validation.error.details[0].message})
-    }
     Tasks.findById(req.params.id).then((data):void=>{
         if (data){
             res.json({taskId:data._id,title:data.title,description:data.description,completed:data.completed})
@@ -56,14 +48,6 @@ const get_by_id = (req:express.Request,res:express.Response,next:NextFunction):v
     })
 }
 const put = (req:any,res:express.Response,next:NextFunction):void=>{
-    const idValidation:joi.ValidationResult = IdSchema.validate(req.params)
-    if (idValidation.error){
-        throw new ValidationError({message: idValidation.error.details[0].message})
-    }
-    const validation:joi.ValidationResult = schema.validate(req.body)
-    if (validation.error){
-        throw new ValidationError({message: validation.error.details[0].message})
-    }
     const task = {...req.body,userId:req.userId}
     Tasks.findByIdAndUpdate(req.params.id,task,{ new: true }).then((data):void=>{
         if (data){
@@ -77,10 +61,6 @@ const put = (req:any,res:express.Response,next:NextFunction):void=>{
     })
 }
 const delete_by_id = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    const validation:joi.ValidationResult = IdSchema.validate(req.params)
-    if (validation.error){
-        throw new ValidationError({message: validation.error.details[0].message})
-    }
     Tasks.findByIdAndDelete(req.params.id).then((data):void=>{
         if (data){
             res.status(204).send()
