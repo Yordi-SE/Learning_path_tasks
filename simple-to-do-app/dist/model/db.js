@@ -44,7 +44,7 @@ const TaskSchema = new mongoose_1.Schema({
     }
 });
 const Tasks = (0, mongoose_1.model)('Tasks', TaskSchema);
-mongoose_1.default.connect('mongodb+srv://yordanoslemmawork:zeC0vfZAdYiVf5L0@cluster0.cyp2ike.mongodb.net/To-Do-DB?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+mongoose_1.default.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/To-Do-DB?retryWrites=true&w=majority&appName=Cluster0').then(() => {
     console.log('Connected to the database');
 }).catch((err) => {
     console.log('Error connecting to the database', err);
