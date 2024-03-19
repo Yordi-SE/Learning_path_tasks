@@ -23,6 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.db = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 mongoose_1.default.Promise = global.Promise;
 // interface ITask extends Document{
@@ -44,9 +45,12 @@ const TaskSchema = new mongoose_1.Schema({
     }
 });
 const Tasks = (0, mongoose_1.model)('Tasks', TaskSchema);
-mongoose_1.default.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/To-Do-DB?retryWrites=true&w=majority&appName=Cluster0').then(() => {
-    console.log('Connected to the database');
-}).catch((err) => {
-    console.log('Error connecting to the database', err);
-});
+const db = function () {
+    mongoose_1.default.connect('mongodb+srv://<username>:<password>@cluster0.cyp2ike.mongodb.net/To-Do-DB?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+        console.log('Connected to the database');
+    }).catch((err) => {
+        console.log('Error connecting to the database', err);
+    });
+};
+exports.db = db;
 exports.default = Tasks;
