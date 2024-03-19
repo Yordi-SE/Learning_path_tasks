@@ -44,5 +44,6 @@ describe("DELETE METHOD",()=>{
             expect(response.status).toBe(404);
             expect(response.body).toHaveProperty('errors');
         })
+
     })
     })

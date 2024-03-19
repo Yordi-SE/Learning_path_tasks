@@ -40,7 +40,11 @@ describe("POST METHOD", () => {
                 "completed": false
             }).set('x-access-token', jwtToken.body.token);
             expect(response.status).toBe(201);
+<<<<<<< HEAD
             expect(response.body.taskId).toBeDefined();
+=======
+            expect(response.body.taskId).toBeTruthy();
+>>>>>>> 7891632 (add unittest for the task endpoints)
             expect(response.body.title).toBe("goto home");
             expect(response.body.description).toBe("this time to go home");
             expect(response.body.completed).toBe(false);

@@ -15,7 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const server_1 = require("../utils/server");
 const app = (0, server_1.createApp)();
+<<<<<<< HEAD
 const mongodb_1 = require("mongodb");
+=======
+>>>>>>> 7891632 (add unittest for the task endpoints)
 const database_1 = require("./config/database");
 let jwtToken;
 describe("GET BY ID METHOD", () => {
@@ -42,7 +45,11 @@ describe("GET BY ID METHOD", () => {
             }).set('x-access-token', jwtToken.body.token);
             const response = yield (0, supertest_1.default)(app).get('/api/todos/' + posted.body.taskId).send().set('x-access-token', jwtToken.body.token);
             expect(response.status).toBe(200);
+<<<<<<< HEAD
             expect(response.body.taskId).toBeDefined();
+=======
+            expect(response.body.taskId).toBeTruthy();
+>>>>>>> 7891632 (add unittest for the task endpoints)
             expect(response.body.title).toBe("goto home");
             expect(response.body.description).toBe("this time to go home");
             expect(response.body.completed).toBe(false);
@@ -52,11 +59,14 @@ describe("GET BY ID METHOD", () => {
             expect(response.status).toBe(422);
             expect(response.body).toHaveProperty('errors');
         }));
+<<<<<<< HEAD
         test("Given an appropriate id of the task and if task not found, it should return 404 status code with error object", () => __awaiter(void 0, void 0, void 0, function* () {
             const object_id = new mongodb_1.ObjectId();
             const response = yield (0, supertest_1.default)(app).get('/api/todos/' + object_id.valueOf()).send().set('x-access-token', jwtToken.body.token);
             expect(response.status).toBe(404);
             expect(response.body).toHaveProperty('errors');
         }));
+=======
+>>>>>>> 7891632 (add unittest for the task endpoints)
     });
 });

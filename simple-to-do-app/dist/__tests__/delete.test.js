@@ -15,7 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const server_1 = require("../utils/server");
 const app = (0, server_1.createApp)();
+<<<<<<< HEAD
 const mongodb_1 = require("mongodb");
+=======
+>>>>>>> 7891632 (add unittest for the task endpoints)
 const database_1 = require("./config/database");
 let jwtToken;
 describe("DELETE METHOD", () => {
@@ -49,11 +52,14 @@ describe("DELETE METHOD", () => {
             expect(response.status).toBe(422);
             expect(response.body).toHaveProperty('errors');
         }));
+<<<<<<< HEAD
         test("Given an appropriate id of the task and if task not found, it should return 404 status code with error object", () => __awaiter(void 0, void 0, void 0, function* () {
             const object_id = new mongodb_1.ObjectId();
             const response = yield (0, supertest_1.default)(app).delete('/api/todos/' + object_id.valueOf()).send().set('x-access-token', jwtToken.body.token);
             expect(response.status).toBe(404);
             expect(response.body).toHaveProperty('errors');
         }));
+=======
+>>>>>>> 7891632 (add unittest for the task endpoints)
     });
 });
