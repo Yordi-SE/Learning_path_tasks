@@ -1,31 +1,12 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config({ path: './config.env' });
-const express = require("express");
-const routers_1 = __importDefault(require("./routers/routers"));
 require("express-async-errors");
-const custome_handler_1 = __importDefault(require("./errors/custome_handler"));
-const authRouters_1 = __importDefault(require("./routers/authRouters"));
-const logger = require("morgan");
-const bodyParser = require("body-parser");
-const app = express();
+const server_1 = require("./utils/server");
+const db_1 = require("./model/db");
+const app = (0, server_1.createApp)();
 const hostname = '127.0.0.1';
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Headers", "x-access-token, Origin, Content-Type, Accept");
-    next();
-});
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json());
-app.use('/api', routers_1.default);
-app.use('/api/auth', authRouters_1.default);
-app.use(custome_handler_1.default);
+const port = 3000;
+(0, db_1.db)();
 app.listen(port, hostname, () => {
     console.log('Express Server is started at ' + port);
 });

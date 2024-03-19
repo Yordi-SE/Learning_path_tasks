@@ -1,3 +1,4 @@
+import { func } from 'joi';
 import mongoose, {Document, Schema,Model,model, mongo,Types} from 'mongoose';
 mongoose.Promise = global.Promise;
 // interface ITask extends Document{
@@ -20,10 +21,12 @@ const TaskSchema: Schema = new Schema({
     }
 })
 const Tasks=model('Tasks',TaskSchema)
-mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.cyp2ike.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority&appName=Cluster0`).then(()=>{
+export const db = function(){
+    mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.cyp2ike.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority&appName=Cluster0`).then(()=>{
     console.log('Connected to the database')
 }).catch((err:Error)=>{
     console.log('Error connecting to the database',err)
     
 })
+}
 export default Tasks;
