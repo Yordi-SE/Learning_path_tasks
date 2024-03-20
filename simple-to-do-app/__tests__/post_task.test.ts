@@ -28,7 +28,7 @@ describe("POST METHOD",()=>{
             }).set('x-access-token',jwtToken.body.token);
 
             expect(response.status).toBe(201);
-            expect(response.body.taskId).toBeTruthy();
+            expect(response.body.taskId).toBeDefined();
             expect(response.body.title).toBe("goto home");
             expect(response.body.description).toBe("this time to go home");
             expect(response.body.completed).toBe(false);

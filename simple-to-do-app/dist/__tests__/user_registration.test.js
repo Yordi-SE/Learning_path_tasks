@@ -17,40 +17,40 @@ const server_1 = require("../utils/server");
 const app = (0, server_1.createApp)();
 const database_1 = require("./config/database");
 let jwtToken;
-describe("POST METHOD", () => {
+describe("USER REGISTRATION METHOD", () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, database_1.setupMockMongoDB)();
-        yield (0, supertest_1.default)(app).post('/api/auth/signup').send({
-            "username": "Yodanos",
-            "password": "Yordianos"
-        });
-        jwtToken = yield (0, supertest_1.default)(app).post('/api/auth/login').send({
-            "username": "Yodanos",
-            "password": "Yordianos"
-        });
     }));
     afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, database_1.teardownMockMongoDB)();
     }));
-    describe("POST /api/todos", () => {
-        test("Given the task data it should save to the server and return the saved object", () => __awaiter(void 0, void 0, void 0, function* () {
-            const response = yield (0, supertest_1.default)(app).post('/api/todos').send({
-                "title": "goto home",
-                "description": "this time to go home",
-                "completed": false
-            }).set('x-access-token', jwtToken.body.token);
+    describe("POST /api/auth/signup", () => {
+        test("Given the user data it should save to the server and return the saved object username", () => __awaiter(void 0, void 0, void 0, function* () {
+            const response = yield (0, supertest_1.default)(app).post('/api/auth/signup').send({
+                "username": "Yordanos",
+                "password": "YordanosPasword"
+            });
             expect(response.status).toBe(201);
-            expect(response.body.taskId).toBeDefined();
-            expect(response.body.title).toBe("goto home");
-            expect(response.body.description).toBe("this time to go home");
-            expect(response.body.completed).toBe(false);
+            expect(response.body.username).toBe("Yordanos");
         }));
-        test("Not given appropriate task data it should return 422 status code with error object", () => __awaiter(void 0, void 0, void 0, function* () {
-            const response = yield (0, supertest_1.default)(app).post('/api/todos').send({
-                "title": "goto home",
-                "description": "this time to go home",
-            }).set('x-access-token', jwtToken.body.token);
+        test("Not given appropriate user data it should return 422 status code with error object", () => __awaiter(void 0, void 0, void 0, function* () {
+            const response = yield (0, supertest_1.default)(app).post('/api/auth/signup').send({
+                "username": "",
+                "password": "YordanosPasword"
+            });
             expect(response.status).toBe(422);
+            expect(response.body).toHaveProperty('errors');
+        }));
+        test("Given user data and username already exits, it should return 400 status code with error object", () => __awaiter(void 0, void 0, void 0, function* () {
+            yield (0, supertest_1.default)(app).post('/api/auth/signup').send({
+                "username": "Yordanos",
+                "password": "YordanosPasword"
+            });
+            const response = yield (0, supertest_1.default)(app).post('/api/auth/signup').send({
+                "username": "Yordanos",
+                "password": "YordanosPasword"
+            });
+            expect(response.status).toBe(400);
             expect(response.body).toHaveProperty('errors');
         }));
     });

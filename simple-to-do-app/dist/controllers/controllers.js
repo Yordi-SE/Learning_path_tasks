@@ -32,7 +32,7 @@ const get_all = (req, res, next) => {
     });
 };
 const get_by_id = (req, res, next) => {
-    db_1.default.findById(req.params.id).then((data) => {
+    db_1.default.findOne({ $and: [{ _id: req.params.id }, { userId: req.userId }] }).then((data) => {
         if (data) {
             res.json({ taskId: data._id, title: data.title, description: data.description, completed: data.completed });
         }
@@ -45,7 +45,7 @@ const get_by_id = (req, res, next) => {
 };
 const put = (req, res, next) => {
     const task = Object.assign(Object.assign({}, req.body), { userId: req.userId });
-    db_1.default.findByIdAndUpdate(req.params.id, task, { new: true }).then((data) => {
+    db_1.default.findOneAndUpdate({ $and: [{ _id: req.params.id }, { userId: req.userId }] }, task, { returnOriginal: false }).then((data) => {
         if (data) {
             res.json({ taskId: data._id, title: data.title, description: data.description, completed: data.completed });
         }
@@ -57,7 +57,7 @@ const put = (req, res, next) => {
     });
 };
 const delete_by_id = (req, res, next) => {
-    db_1.default.findByIdAndDelete(req.params.id).then((data) => {
+    db_1.default.findOneAndDelete({ $and: [{ _id: req.params.id }, { userId: req.userId }] }).then((data) => {
         if (data) {
             res.status(204).send();
         }

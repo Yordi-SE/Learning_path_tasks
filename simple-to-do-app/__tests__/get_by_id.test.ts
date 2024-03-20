@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { createApp } from '../utils/server';
 const app = createApp();
+import { ObjectId } from 'mongodb';
 import { setupMockMongoDB,teardownMockMongoDB } from './config/database';
 let jwtToken:any
 describe("GET BY ID METHOD",()=>{
@@ -28,7 +29,7 @@ describe("GET BY ID METHOD",()=>{
 
             const response = await request(app).get('/api/todos/' + posted.body.taskId).send().set('x-access-token',jwtToken.body.token);
             expect(response.status).toBe(200);
-            expect(response.body.taskId).toBeTruthy();
+            expect(response.body.taskId).toBeDefined();
             expect(response.body.title).toBe("goto home");
             expect(response.body.description).toBe("this time to go home");
             expect(response.body.completed).toBe(false);
@@ -37,6 +38,12 @@ describe("GET BY ID METHOD",()=>{
 
             const response = await request(app).get('/api/todos/' + "not id of the task").send().set('x-access-token',jwtToken.body.token);
             expect(response.status).toBe(422);
+            expect(response.body).toHaveProperty('errors');
+        })
+        test("Given an appropriate id of the task and if task not found, it should return 404 status code with error object", async()=>{
+            const object_id = new ObjectId();
+            const response = await request(app).get('/api/todos/' + object_id.valueOf()).send().set('x-access-token',jwtToken.body.token);
+            expect(response.status).toBe(404);
             expect(response.body).toHaveProperty('errors');
         })
 

@@ -18,7 +18,7 @@ const signup = (req, res, next) => {
         else {
             user_1.default.create(req.body).then((data) => {
                 if (data) {
-                    res.status(201).json({ id: data._id, username: data.username });
+                    res.status(201).json({ username: data.username });
                 }
                 else {
                     throw new badrequest_1.default({ message: "some field is missing" });
@@ -42,7 +42,7 @@ const signin = (req, res, next) => {
             const token = jsonwebtoken_1.default.sign({ id: data._id }, auth_config_1.default.secret, {
                 algorithm: "HS256", allowInsecureKeySizes: true, expiresIn: 86400
             });
-            res.status(200).json({ user_id: data._id, token: token });
+            res.status(200).json({ token: token });
         }
         else {
             throw new not_found_1.default({ message: "User Not found" });
