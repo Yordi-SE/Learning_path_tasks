@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const server_1 = require("../utils/server");
 const app = (0, server_1.createApp)();
+const mongodb_1 = require("mongodb");
 const database_1 = require("./config/database");
 let jwtToken;
 describe("DELETE METHOD", () => {
@@ -46,6 +47,12 @@ describe("DELETE METHOD", () => {
         test("Not given an appropriate id of the task it should return 422 status code with error object", () => __awaiter(void 0, void 0, void 0, function* () {
             const response = yield (0, supertest_1.default)(app).delete('/api/todos/' + "notidofthetask").send().set('x-access-token', jwtToken.body.token);
             expect(response.status).toBe(422);
+            expect(response.body).toHaveProperty('errors');
+        }));
+        test("Given an appropriate id of the task and if task not found, it should return 404 status code with error object", () => __awaiter(void 0, void 0, void 0, function* () {
+            const object_id = new mongodb_1.ObjectId();
+            const response = yield (0, supertest_1.default)(app).delete('/api/todos/' + object_id.valueOf()).send().set('x-access-token', jwtToken.body.token);
+            expect(response.status).toBe(404);
             expect(response.body).toHaveProperty('errors');
         }));
     });

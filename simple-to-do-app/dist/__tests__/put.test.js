@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const server_1 = require("../utils/server");
 const app = (0, server_1.createApp)();
+const mongodb_1 = require("mongodb");
 const database_1 = require("./config/database");
 let jwtToken;
 describe("PUT METHOD", () => {
@@ -45,7 +46,7 @@ describe("PUT METHOD", () => {
                 "completed": true
             }).set('x-access-token', jwtToken.body.token);
             expect(response.status).toBe(200);
-            expect(response.body.taskId).toBeTruthy();
+            expect(response.body.taskId).toBeDefined();
             expect(response.body.title).toBe("Don't go home");
             expect(response.body.description).toBe("Not this time to go home");
             expect(response.body.completed).toBe(true);
@@ -70,6 +71,16 @@ describe("PUT METHOD", () => {
                 "completed": true
             }).set('x-access-token', jwtToken.body.token);
             expect(response.status).toBe(422);
+            expect(response.body).toHaveProperty('errors');
+        }));
+        test("Given an appropriate id of the task and if task not found, it should return 404 status code with error object", () => __awaiter(void 0, void 0, void 0, function* () {
+            const object_id = new mongodb_1.ObjectId();
+            const response = yield (0, supertest_1.default)(app).put('/api/todos/' + object_id.valueOf()).send({
+                "title": "goto home",
+                "description": "this time to go home",
+                "completed": false
+            }).set('x-access-token', jwtToken.body.token);
+            expect(response.status).toBe(404);
             expect(response.body).toHaveProperty('errors');
         }));
     });
