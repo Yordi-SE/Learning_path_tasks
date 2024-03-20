@@ -27,6 +27,7 @@
     "typescript": "^5.4.2"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9"
   }
 }

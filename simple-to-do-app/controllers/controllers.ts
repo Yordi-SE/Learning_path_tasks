@@ -29,8 +29,8 @@ const get_all = (req:any,res:express.Response,next:NextFunction):void=>{
     })
 
 }
-const get_by_id = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    Tasks.findById(req.params.id).then((data):void=>{
+const get_by_id = (req:any,res:express.Response,next:NextFunction):void=>{
+    Tasks.findOne({$and: [{_id:req.params.id},{userId:req.userId}]}).then((data):void=>{
         if (data){
             res.json({taskId:data._id,title:data.title,description:data.description,completed:data.completed})
         }
@@ -43,7 +43,7 @@ const get_by_id = (req:express.Request,res:express.Response,next:NextFunction):v
 }
 const put = (req:any,res:express.Response,next:NextFunction):void=>{
     const task = {...req.body,userId:req.userId}
-    Tasks.findByIdAndUpdate(req.params.id,task,{ new: true }).then((data):void=>{
+    Tasks.findOneAndUpdate({$and: [{_id:req.params.id},{userId:req.userId}]},task,{ returnOriginal: false }).then((data):void=>{
         if (data){
             res.json({taskId:data._id,title:data.title,description:data.description,completed:data.completed})
         }
@@ -54,8 +54,8 @@ const put = (req:any,res:express.Response,next:NextFunction):void=>{
         next(error)
     })
 }
-const delete_by_id = (req:express.Request,res:express.Response,next:NextFunction):void=>{
-    Tasks.findByIdAndDelete(req.params.id).then((data):void=>{
+const delete_by_id = (req:any,res:express.Response,next:NextFunction):void=>{
+    Tasks.findOneAndDelete({$and: [{_id:req.params.id},{userId:req.userId}]}).then((data):void=>{
         if (data){
             res.status(204).send()
         }

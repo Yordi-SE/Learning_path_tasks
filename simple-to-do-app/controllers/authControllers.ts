@@ -13,7 +13,7 @@ const signup = (req:Request, res:Response,next:NextFunction):void => {
         else{
             User.create(req.body).then((data):void=>{
                 if (data){
-                    res.status(201).json({id:data._id,username:data.username})
+                    res.status(201).json({username:data.username})
                 }
                 else{
                     throw new BadRequestError({message: "some field is missing"})
@@ -37,7 +37,7 @@ const signin = (req:Request, res:Response,next:NextFunction):void => {
             const token = jwt.sign({ id: data._id }, config.secret, {
                 algorithm:"HS256",allowInsecureKeySizes:true,expiresIn: 86400
             });
-            res.status(200).json({ user_id: data._id, token: token });
+            res.status(200).json({token: token });
         }
         else{
             throw new NotFound({message: "User Not found"})
