@@ -29,9 +29,12 @@
   },
   "devDependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9"
 =======
+=======
+>>>>>>> 6a1ca6b10f87e920477db67b228653187d024e99
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
@@ -41,6 +44,9 @@
     "supertest": "^6.3.4",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2"
+<<<<<<< HEAD
 >>>>>>> 7891632 (add unittest for the task endpoints)
+=======
+>>>>>>> 6a1ca6b10f87e920477db67b228653187d024e99
   }
 }
