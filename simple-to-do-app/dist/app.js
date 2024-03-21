@@ -3,6 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config({ path: './config.env' });
 const express = require("express");
 const routers_1 = __importDefault(require("./routers/routers"));
 require("express-async-errors");
@@ -12,7 +14,7 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const app = express();
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "x-access-token, Origin, Content-Type, Accept");
     next();
