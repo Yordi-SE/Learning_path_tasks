@@ -46,9 +46,5 @@ describe("GET BY ID METHOD",()=>{
             expect(response.status).toBe(404);
             expect(response.body).toHaveProperty('errors');
         })
-<<<<<<< HEAD
-=======
-
->>>>>>> 6a1ca6b (write E2E testing with jest for simple-to-do-app)
     })
     })
