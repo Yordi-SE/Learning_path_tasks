@@ -1,1 +1,1 @@
-*.env
+./simple-to-do-app/config.env
